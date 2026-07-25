@@ -18,7 +18,7 @@ export function HabitHeatmap({ checkIns, weeksCount = 13 }: HabitHeatmapProps) {
     <div className="overflow-x-auto pb-1">
       <div className="inline-flex flex-col gap-1.5 min-w-max">
         {/* month labels row */}
-        <div className="flex gap-1 pl-7 text-[11px] font-medium text-muted-foreground/70">
+        <div className="flex gap-1 pl-7 text-[11px] font-medium  text-muted-foreground/70">
           {weeks.map((_, i) => {
             const label = monthLabels.find((m) => m.weekIndex === i)
             return (

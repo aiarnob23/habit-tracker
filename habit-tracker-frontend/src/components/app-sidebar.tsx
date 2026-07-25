@@ -58,7 +58,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className="w-52" collapsible="icon" {...props}>
+    <Sidebar className="" collapsible="icon" {...props}>
       <SidebarHeader>
         <h3 className="text-lg font-semibold leading-none tracking-tight mt-4 ml-3">Habit Tracker</h3>
       </SidebarHeader>
