@@ -71,12 +71,12 @@ export class AuthService {
             )
         }
         //check if email is verified
-        if (existingUser.emailVerifiedAt === null) {
-            throw new UnauthorizedException(
-                ErrorCodes.EMAIL_NOT_VERIFIED,
-                'Please verify your email before logging in',
-            )
-        }
+        // if (existingUser.emailVerifiedAt === null) {
+        //     throw new UnauthorizedException(
+        //         ErrorCodes.EMAIL_NOT_VERIFIED,
+        //         'Please verify your email before logging in',
+        //     )
+        // }
         //verify password
         const isValidPassword = await this.verifyPassword(dto.password, existingUser.passwordHash);
         if (!isValidPassword) {

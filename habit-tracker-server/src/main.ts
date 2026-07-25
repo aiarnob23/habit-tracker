@@ -13,6 +13,10 @@ async function bootstrap() {
     bufferLogs: true,
   });
   app.use(cookieParser());
+  app.enableCors({
+  origin: ["http://localhost:5173", "http://localhost:3001"],
+  credentials: true,
+});
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(
     new ValidationPipe({

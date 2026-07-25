@@ -1,9 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router'
+// routes/_auth.tsx
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { useAuthStore } from '@/store/auth.store'
+import { AuthLayout } from '@/layouts/auth-layout'
 
 export const Route = createFileRoute('/_auth')({
-  component: RouteComponent,
+  beforeLoad: () => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated
+    if (isAuthenticated) {
+      throw redirect({ to: '/' })
+    }
+  },
+  component: () => (
+    <AuthLayout>
+      <Outlet />
+    </AuthLayout>
+  ),
 })
-
-function RouteComponent() {
-  return <div>Hello "/_auth"!</div>
-}
