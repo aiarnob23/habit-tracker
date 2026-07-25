@@ -2,8 +2,8 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import Redis from 'ioredis';
 import { promises as fs } from 'fs';
 import { join } from 'path';
+import { REDIS_CLIENT } from 'src/infrastructure/redis/redis.constant';
 
-import { REDIS_CLIENT } from '../../redis/redis.constant';
 
 @Injectable()
 export class TokenBucketService implements OnModuleInit {

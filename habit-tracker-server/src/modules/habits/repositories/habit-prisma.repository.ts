@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../database/prisma/prisma.service';
+import { PrismaService } from '../../../infrastructure/database/prisma/prisma.service';
 import { HabitStatus, Prisma } from '../../../../generated/prisma/client';
 import { IHabitRepository } from '../interfaces/habit-repository.interface';
 

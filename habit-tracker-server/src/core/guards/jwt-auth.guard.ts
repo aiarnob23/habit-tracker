@@ -5,8 +5,8 @@ import { TokenService } from 'src/modules/auth/token.service';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { UnauthorizedException } from '../exceptions/unauthorized.exceptions';
 import { ErrorCodes } from '../exceptions/error-codes';
-import { REDIS_CLIENT } from '../redis/redis.constant';
 import Redis from 'ioredis';
+import { REDIS_CLIENT } from 'src/infrastructure/redis/redis.constant';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

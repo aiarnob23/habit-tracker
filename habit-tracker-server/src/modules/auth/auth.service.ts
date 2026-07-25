@@ -1,7 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import Redis from "ioredis";
 import { AppLogger } from "src/core/logging/logger.service";
-import { REDIS_CLIENT } from "src/core/redis/redis.constant";
 import { EncryptionService } from "src/core/security/encryption/encryption.service";
 import { TokenService } from "./token.service";
 import { SessionService } from "../sessions/sessions.service";
@@ -14,6 +13,7 @@ import { ConflictException } from "src/core/exceptions/conflict.exceptions";
 import { UnauthorizedException } from "src/core/exceptions/unauthorized.exceptions";
 import { RequestContext } from "src/core/context/request/request-context";
 import { config } from "src/core/config";
+import { REDIS_CLIENT } from "src/infrastructure/redis/redis.constant";
 
 
 @Injectable()

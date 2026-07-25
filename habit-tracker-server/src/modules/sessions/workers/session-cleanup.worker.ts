@@ -1,9 +1,9 @@
 import { Inject, Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { Queue, Worker } from "bullmq";
-import { QUEUES, SESSION_JOBS } from "src/core/queues/queue.constants";
 import { SessionService } from "../sessions.service";
 import { AppLogger } from "src/core/logging/logger.service";
 import { config } from "src/core/config";
+import { QUEUES, SESSION_JOBS } from "src/infrastructure/queues/queue.constants";
 
 @Injectable()
 export class SessionCleanupWorker implements OnModuleInit, OnModuleDestroy {

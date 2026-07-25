@@ -67,7 +67,7 @@ export class HabitsController {
 
     /** Mark today done */
     @Put(':id/checkins/today')
-    markTodayDone(
+    completeToday(
         @CurrentUser('userId') userId: number,
         @Param('id', ParseIntPipe) id: number,
     ) {
@@ -76,7 +76,7 @@ export class HabitsController {
 
     /** Unmark today */
     @Delete(':id/checkins/today')
-    unmarkToday(
+    removeTodayCompletion(
         @CurrentUser('userId') userId: number,
         @Param('id', ParseIntPipe) id: number,
     ) {

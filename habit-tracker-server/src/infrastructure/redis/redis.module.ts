@@ -1,8 +1,8 @@
 // src/redis/redis.module.ts
 import { Module, Global } from '@nestjs/common';
 import Redis from 'ioredis';
-import { config } from '../config';
 import { REDIS_CLIENT } from './redis.constant';
+import { config } from 'src/core/config';
 
 @Global()
 @Module({

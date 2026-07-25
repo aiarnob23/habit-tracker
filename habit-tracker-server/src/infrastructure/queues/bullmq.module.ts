@@ -1,7 +1,7 @@
 import { Module, Global } from '@nestjs/common';
 import { Queue } from 'bullmq';
-import { config } from '../config';
 import { QUEUES } from './queue.constants';
+import { config } from 'src/core/config';
 
 const redisConnection = {
     host: config.redis.host,

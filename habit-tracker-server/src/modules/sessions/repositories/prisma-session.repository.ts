@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/database/prisma/prisma.service";
+import { PrismaService } from "src/infrastructure/database/prisma/prisma.service";
 import { ICreateSessionInput, ISessionRepository } from "../interfaces/session-repository.interface";
 import { UserSession } from "generated/prisma/client";
 
