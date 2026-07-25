@@ -7,7 +7,6 @@ import { UnauthorizedException } from "src/core/exceptions/unauthorized.exceptio
 export interface JwtPayload {
     userId: number,
     email: string,
-    role: string
 }
 
 export interface TokenPayload {
@@ -21,8 +20,8 @@ export class TokenService {
         private readonly jwtService: JwtService,
     ) { }
 
-    generateToken(userId: number, email: string, role: string): TokenPayload {
-        const payload = { userId, email, role };
+    generateToken(userId: number, email: string): TokenPayload {
+        const payload = { userId, email };
         const accessToken = this.jwtService.sign(payload,
             {
                 secret: config.security.jwt.secret,

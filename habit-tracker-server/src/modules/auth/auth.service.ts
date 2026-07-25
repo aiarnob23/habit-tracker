@@ -86,7 +86,7 @@ export class AuthService {
             )
         }
         //create access and refresh tokens
-        const { accessToken, refreshToken } = this.tokenService.generateToken(existingUser.id, existingUser.email, existingUser.role);
+        const { accessToken, refreshToken } = this.tokenService.generateToken(existingUser.id, existingUser.email);
         //create session
         const ctx = RequestContext.get();
         await this.sessionService.createSession(
@@ -129,7 +129,7 @@ export class AuthService {
             )
         }
         //create access token
-        const { accessToken, refreshToken } = this.tokenService.generateToken(paylod.userId, paylod.email, paylod.role);
+        const { accessToken, refreshToken } = this.tokenService.generateToken(paylod.userId, paylod.email);
         //rotate refresh token
         await this.sessionService.rotateRefreshToken(session.id, refreshToken);
         return {

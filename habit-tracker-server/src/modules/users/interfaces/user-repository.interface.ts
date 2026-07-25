@@ -5,12 +5,10 @@ export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
 
 export interface CreateUserInput {
     email: string;
-    phone?: string;
     firstName: string;
     lastName?: string;
     passwordHash: string;
     avatarUrl?: string;
-    communityId?: number;
     emailVerifiedAt?: Date | null;
 
 }

@@ -32,10 +32,7 @@ export class PrismaUserRepository implements IUserRepository {
                 email: true,
                 firstName: true,
                 lastName: true,
-                phone: true,
-                role: true,
                 avatarUrl: true,
-                communityId: true,
             }
         });
     }
@@ -50,9 +47,7 @@ export class PrismaUserRepository implements IUserRepository {
                 email: true,
                 firstName: true,
                 lastName: true,
-                phone: true,
                 avatarUrl: true,
-                communityId: true
             }
         })
     }

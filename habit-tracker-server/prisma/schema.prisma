@@ -9,11 +9,8 @@ datasource db {
 
 enum OTPType {
   EMAIL_VERIFICATION
-  PHONE_VERIFICATION
   EMAIL_CHANGE
-  PHONE_CHANGE
   PASSWORD_RESET
-  TWO_FACTOR
 }
 
 // ─────────────────────────────────────────────
