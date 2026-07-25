@@ -13,6 +13,7 @@ import { AuthService } from './modules/auth/auth.service';
 import { APP_GUARD } from '@nestjs/core';
 import { RateLimitGuard } from './core/rate-limit/guards/rate-limit.guard';
 import { AppService } from './app.service';
+import { HabitsModule } from './modules/habits/habits.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AppService } from './app.service';
     UsersModule,
     AuthModule,
     SessionsModule,
+    HabitsModule,
   ],
   controllers: [AppController],
   providers: [
