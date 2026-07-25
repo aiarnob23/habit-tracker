@@ -1,8 +1,25 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import cookieParser from 'cookie-parser';
+import { ValidationPipe } from '@nestjs/common';
+import { GlobalExceptionFilter } from './core/filters/global-exception.filter';
+import { AppLogger } from './core/logging/logger.service';
+import { TransformInterceptor } from './core/interceptors/transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
+  app.setGlobalPrefix('api/v1');
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    })
+  )
+  const logger = app.get(AppLogger);
+  app.useGlobalFilters(new GlobalExceptionFilter(logger))
+  app.useGlobalInterceptors(new TransformInterceptor());
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
