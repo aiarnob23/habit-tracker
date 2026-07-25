@@ -1,86 +1,99 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseIntPipe,
-  Patch,
-  Post,
-  Put,
-  Query,
-  UseGuards,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Patch,
+    Post,
+    Put,
+    Query,
 } from '@nestjs/common';
 import { CreateHabitDto } from './dto/create-habit.dto';
 import { UpdateHabitDto } from './dto/update-habit.dto';
 import { QueryCheckInsDto } from './dto/query-checkins.dto';
 import { CurrentUser } from 'src/core/decorators/current-user.decorator';
-import { JwtAuthGuard } from 'src/core/guards/jwt-auth.guard';
 import { HabitsService } from './habits.service';
 
-@UseGuards(JwtAuthGuard)
 @Controller('habits')
 export class HabitsController {
-  constructor(private readonly habitsService: HabitsService) {}
+    constructor(private readonly habitsService: HabitsService) { }
 
-  @Post()
-  create(@CurrentUser() userId: number, @Body() dto: CreateHabitDto) {
-    return this.habitsService.create(userId, dto);
-  }
+    @Post()
+    create(@CurrentUser('userId') userId: number, @Body() dto: CreateHabitDto) {
+        return this.habitsService.create(userId, dto);
+    }
 
-  /** All habit's */
-  @Get()
-  findAll(@CurrentUser() userId: number) {
-    return this.habitsService.findAllForUser(userId);
-  }
+    /** All habit's */
+    @Get()
+    async findAll(@CurrentUser('userId') userId: number) {
+        const habits = await this.habitsService.findAllForUser(userId);
+        return {
+            message: 'All habits fetched successfully',
+            data: habits,
+        }
+    }
 
-  /** Detail view */
-  @Get(':id')
-  findOne(
-    @CurrentUser() userId: number,
-    @Param('id', ParseIntPipe) id: number,
-    @Query() query: QueryCheckInsDto,
-  ) {
-    return this.habitsService.findOneForUser(userId, id, query.days);
-  }
+    /** Detail view */
+    @Get(':id')
+    async findOne(
+        @CurrentUser('userId') userId: number,
+        @Param('id', ParseIntPipe) id: number,
+        @Query() query: QueryCheckInsDto,
+    ) {
+        const habit = await this.habitsService.findOneForUser(userId, id, query.days);
+        return {
+            message: 'Habit detail fetched successfully',
+            data: habit,
+        }
+    }
 
-  @Patch(':id')
-  update(
-    @CurrentUser() userId: number,
-    @Param('id', ParseIntPipe) id: number,
-    @Body() dto: UpdateHabitDto,
-  ) {
-    return this.habitsService.update(userId, id, dto);
-  }
+    /** Update */
+    @Patch(':id')
+    update(
+        @CurrentUser('userId') userId: number,
+        @Param('id', ParseIntPipe) id: number,
+        @Body() dto: UpdateHabitDto,
+    ) {
+        return this.habitsService.update(userId, id, dto);
+    }
 
-  /** Soft delete */
-  @Delete(':id')
-  archive(@CurrentUser() userId: number, @Param('id', ParseIntPipe) id: number) {
-    return this.habitsService.archive(userId, id);
-  }
+    /** Soft delete */
+    @Delete(':id')
+    archive(@CurrentUser('userId') userId: number, @Param('id', ParseIntPipe) id: number) {
+        return this.habitsService.archive(userId, id);
+    }
 
-  @Put(':id/checkins/today')
-  markTodayDone(
-    @CurrentUser() userId: number,
-    @Param('id', ParseIntPipe) id: number,
-  ) {
-    return this.habitsService.markTodayDone(userId, id);
-  }
+    /** Mark today done */
+    @Put(':id/checkins/today')
+    markTodayDone(
+        @CurrentUser('userId') userId: number,
+        @Param('id', ParseIntPipe) id: number,
+    ) {
+        return this.habitsService.markTodayDone(userId, id);
+    }
 
-  @Delete(':id/checkins/today')
-  unmarkToday(
-    @CurrentUser() userId: number,
-    @Param('id', ParseIntPipe) id: number,
-  ) {
-    return this.habitsService.unmarkToday(userId, id);
-  }
+    /** Unmark today */
+    @Delete(':id/checkins/today')
+    unmarkToday(
+        @CurrentUser('userId') userId: number,
+        @Param('id', ParseIntPipe) id: number,
+    ) {
+        return this.habitsService.unmarkToday(userId, id);
+    }
 
-  @Get(':id/checkins')
-  getCheckIns(
-    @CurrentUser() userId: number,
-    @Param('id', ParseIntPipe) id: number,
-    @Query() query: QueryCheckInsDto,
-  ) {
-    return this.habitsService.getCheckIns(userId, id, query.days);
-  }
+    /** Get check-ins */
+    @Get(':id/checkins')
+    async getCheckIns(
+        @CurrentUser('userId') userId: number,
+        @Param('id', ParseIntPipe) id: number,
+        @Query() query: QueryCheckInsDto,
+    ) {
+        const checkIns = await this.habitsService.getCheckIns(userId, id, query.days);
+        return {
+            message: 'Check-ins fetched successfully',
+            data: checkIns,
+        }
+    }
 }

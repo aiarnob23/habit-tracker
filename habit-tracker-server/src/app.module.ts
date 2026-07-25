@@ -9,11 +9,11 @@ import { RateLimitModule } from './core/rate-limit/module/ rate-limit.module';
 import { AppLoggerModule } from './core/logging/logger.module';
 import { RequestContextModule } from './core/context/request/request-context.module';
 import { SessionsModule } from './modules/sessions/sessions.module';
-import { AuthService } from './modules/auth/auth.service';
 import { APP_GUARD } from '@nestjs/core';
 import { RateLimitGuard } from './core/rate-limit/guards/rate-limit.guard';
 import { AppService } from './app.service';
 import { HabitsModule } from './modules/habits/habits.module';
+import { JwtAuthGuard } from './core/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -31,7 +31,7 @@ import { HabitsModule } from './modules/habits/habits.module';
   controllers: [AppController],
   providers: [
     AppService,
-    //{ provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: RateLimitGuard },
   ],
 })
