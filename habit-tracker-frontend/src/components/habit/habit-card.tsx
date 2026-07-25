@@ -1,22 +1,13 @@
-// components/habit-card.tsx
 import { Link } from '@tanstack/react-router'
-import { Flame, Trophy, MoreVertical } from 'lucide-react'
+import { Flame, MoreVertical } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
-import { HabitHeatmap } from './habit-heatmap'
+import type { HabitListItem } from '@/types/habit.types'
 
 interface HabitCardProps {
-  habit: {
-    id: number
-    title: string
-    description?: string | null
-    currentStreak: number
-    longestStreak: number
-    todayCompleted: boolean
-    checkIns: string[]
-  }
+  habit: HabitListItem
   onToggleToday: (habitId: number, nextValue: boolean) => void
 }
 
@@ -40,10 +31,6 @@ export function HabitCard({ habit, onToggleToday }: HabitCardProps) {
                 <Flame className="h-3 w-3" />
                 {habit.currentStreak} day{habit.currentStreak !== 1 ? 's' : ''}
               </Badge>
-              <Badge variant="outline" className="gap-1">
-                <Trophy className="h-3 w-3" />
-                Best: {habit.longestStreak}
-              </Badge>
             </div>
           </div>
         </div>
@@ -53,12 +40,10 @@ export function HabitCard({ habit, onToggleToday }: HabitCardProps) {
         </Button>
       </div>
 
-      <div className="mt-4 rounded-lg border bg-muted/10 p-3 overflow-x-auto">
-        <HabitHeatmap checkIns={habit.checkIns} weeksCount={10} />
-      </div>
-
-      <div className="flex items-center justify-between mt-3">
-        <span className="text-xs text-muted-foreground">Last 70 days</span>
+      <div className="flex items-center justify-between mt-4">
+        <span className="text-xs text-muted-foreground">
+          {habit.todayCompleted ? "Done today ✓" : "Not done yet today"}
+        </span>
         <Link
           to="/habits/$habitId"
           params={{ habitId: habit.id.toString() }}

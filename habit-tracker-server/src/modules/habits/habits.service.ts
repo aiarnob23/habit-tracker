@@ -35,7 +35,7 @@ export class HabitsService {
 
         return habit;
     }
-    //find all by user
+    //find all for user
     async findAllForUser(userId: number): Promise<HabitListItem[]> {
         const cutoff = daysAgoUTC(400);
         const habits = await this.habitRepo.findManyByUserWithRecentCheckIns(
@@ -60,6 +60,7 @@ export class HabitsService {
                 todayCompleted,
                 currentStreak,
                 longestStreak,
+                checkIns: dates.map((d) => toDateKey(d)),
             };
         });
     }

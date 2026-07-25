@@ -3,7 +3,7 @@ import type {
   HabitDetail,
   HabitListItem,
   UpdateHabitPayload,
-} from "@/layouts/habit.types";
+} from "@/types/habit.types";
 import { api } from "@/lib/axios";
 
 export const HabitService = {

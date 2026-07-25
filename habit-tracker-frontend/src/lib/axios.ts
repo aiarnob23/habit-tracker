@@ -1,19 +1,18 @@
 import axios from "axios";
+import { useAuthStore } from "@/store/auth.store";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
-// attach access token
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("access_token");
+  const token = useAuthStore.getState().accessToken;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
 
-// refresh token
 let isRefreshing = false;
 let pendingQueue: { resolve: (token: string) => void; reject: (err: unknown) => void }[] = [];
 
@@ -47,25 +46,20 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const refreshToken = localStorage.getItem("refresh_token");
+        const refreshToken = useAuthStore.getState().refreshToken;
         if (!refreshToken) throw new Error("No refresh token");
 
         const { data } = await axios.post(`${api.defaults.baseURL}/auth/refresh`, {
           refreshToken,
         });
 
-        localStorage.setItem("access_token", data.accessToken);
-        if (data.refreshToken) {
-          localStorage.setItem("refresh_token", data.refreshToken);
-        }
-
+        useAuthStore.getState().setAccessToken(data.accessToken);
         processQueue(null, data.accessToken);
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("refresh_token");
+        useAuthStore.getState().logout();
         window.location.href = "/login";
         return Promise.reject(refreshError);
       } finally {

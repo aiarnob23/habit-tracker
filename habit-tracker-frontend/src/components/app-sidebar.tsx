@@ -9,6 +9,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { GalleryVerticalEndIcon, TerminalSquareIcon, BotIcon, BookOpenIcon } from "lucide-react"
+import { useAuthStore } from "@/store/auth.store"
+import { useLogout } from "@/hooks/use-logout"
 import { Button } from "./ui/button"
 
 const data = {
@@ -57,6 +59,9 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const user = useAuthStore((s) => s.user)
+  const handleLogout = useLogout()
   return (
     <Sidebar className="" collapsible="icon" {...props}>
       <SidebarHeader>
@@ -66,7 +71,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <Button variant="destructive">Log out</Button>
+        <div className="text-sm">{user?.firstName} {user?.lastName}</div>
+        <Button onClick={handleLogout} className="text-destructive">Log out</Button>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
