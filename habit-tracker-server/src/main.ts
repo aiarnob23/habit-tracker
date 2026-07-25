@@ -5,9 +5,13 @@ import { ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './core/filters/global-exception.filter';
 import { AppLogger } from './core/logging/logger.service';
 import { TransformInterceptor } from './core/interceptors/transform.interceptor';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    rawBody: true,
+    bufferLogs: true,
+  });
   app.use(cookieParser());
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(
@@ -18,6 +22,7 @@ async function bootstrap() {
     })
   )
   const logger = app.get(AppLogger);
+  app.useLogger(logger);
   app.useGlobalFilters(new GlobalExceptionFilter(logger))
   app.useGlobalInterceptors(new TransformInterceptor());
   await app.listen(process.env.PORT ?? 3000);
