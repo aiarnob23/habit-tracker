@@ -6,3 +6,73 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum OTPType {
+  EMAIL_VERIFICATION
+  PHONE_VERIFICATION
+  EMAIL_CHANGE
+  PHONE_CHANGE
+  PASSWORD_RESET
+  TWO_FACTOR
+}
+
+// ─────────────────────────────────────────────
+// USER & AUTH
+// ─────────────────────────────────────────────
+model User {
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  firstName    String
+  lastName     String?
+  passwordHash String
+  avatarUrl    String?
+
+  emailVerifiedAt DateTime?
+  isDeleted       Boolean   @default(false)
+  deletedAt       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  otp      OTP[]
+  sessions UserSession[]
+}
+
+model UserSession {
+  id               Int       @id @default(autoincrement())
+  userId           Int
+  refreshTokenHash String
+  isRevoked        Boolean   @default(false)
+  lastLoginAt      DateTime?
+  userAgent        String?
+  ipAddress        String?
+  expiresAt        DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, refreshTokenHash])
+  @@index([userId, isRevoked])
+}
+
+model OTP {
+  id         Int     @id @default(autoincrement())
+  identifier String
+  codeHash   String
+  type       OTPType
+  userId     Int?
+
+  expiresAt   DateTime
+  verified    Boolean   @default(false)
+  verifiedAt  DateTime?
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(5)
+  ipAddress   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([identifier, type])
+  @@index([userId])
+}
