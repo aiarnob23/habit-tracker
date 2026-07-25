@@ -13,6 +13,11 @@ enum OTPType {
   PASSWORD_RESET
 }
 
+enum HabitStatus {
+  ACTIVE
+  ARCHIVED
+}
+
 // ─────────────────────────────────────────────
 // USER & AUTH
 // ─────────────────────────────────────────────
@@ -32,6 +37,7 @@ model User {
 
   otp      OTP[]
   sessions UserSession[]
+  habits   Habit[]
 }
 
 model UserSession {
@@ -72,4 +78,35 @@ model OTP {
 
   @@index([identifier, type])
   @@index([userId])
+}
+
+// ─────────────────────────────────────────────
+// HABITS & CHECKINS
+// ─────────────────────────────────────────────
+model Habit {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String?
+  status      HabitStatus @default(ACTIVE)
+  color       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  archivedAt  DateTime?
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitCheckIns HabitCheckIn[]
+
+  @@index([userId, status])
+}
+
+model HabitCheckIn {
+  id          Int      @id @default(autoincrement())
+  habitId     Int
+  date        DateTime
+  completedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
 }
