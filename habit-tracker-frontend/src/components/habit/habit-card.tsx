@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
-  Flame,
-  Trophy,
   MoreVertical,
   Trash2,
+  ArrowRight,
 } from "lucide-react";
 
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -48,7 +46,7 @@ export function HabitCard({
   const archiveHabit = useArchiveHabit();
 
   const handleArchive = () => {
-    archiveHabit.mutate(habit.id.toString(), {
+    archiveHabit.mutate(habit.id, {
       onSuccess: () => {
         setConfirmOpen(false);
       },
@@ -57,7 +55,7 @@ export function HabitCard({
 
   return (
     <>
-      <Card className="p-4 bg-habitcard flex flex-col">
+      <div className="p-8 bg-habitcard border-white/20 border-2 rounded-2xl overflow-hidden flex flex-col">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
             <Checkbox
@@ -67,27 +65,26 @@ export function HabitCard({
               }
               className="mt-1 h-5 w-5"
             />
-
-            <div>
-              <h3 className="font-semibold leading-tight">
+            <div className="">
+              <h3 className="font-semibold text-xl leading-tight">
                 {habit.title}
               </h3>
 
               {habit.description && (
-                <p className="text-sm text-muted-foreground line-clamp-1">
+                <p className="text-sm mt-1 text-muted-foreground line-clamp-2">
                   {habit.description}
                 </p>
               )}
 
-              <div className="mt-2 flex items-center gap-2">
+              <div className="mt-3 flex items-center gap-2">
                 <Badge variant="secondary" className="gap-1">
-                  <Flame className="h-3 w-3" />
+                  🔥 <span/>
                   {habit.currentStreak} day
                   {habit.currentStreak !== 1 ? "s" : ""}
                 </Badge>
 
                 <Badge variant="outline" className="gap-1">
-                  <Trophy className="h-3 w-3" />
+                  🏆
                   Best: {habit.longestStreak}
                 </Badge>
               </div>
@@ -120,8 +117,8 @@ export function HabitCard({
           />
         </div>
 
-        <div className="mt-3 flex items-center justify-between">
-          <span className="text-xs text-muted-foreground">
+        <div className="mt-4 flex items-center justify-between">
+          <span className="text-sm text-neutral-300 font-semibold px-2 py-1">
             {habit.todayCompleted
               ? "Done today ✓"
               : "Not done yet today"}
@@ -130,12 +127,12 @@ export function HabitCard({
           <Link
             to="/habits/$habitId"
             params={{ habitId: habit.id.toString() }}
-            className="text-sm text-primary hover:underline"
+            className="text-sm border px-2 py-1 bg-accent-foreground/20 font-semibold text-primary hover:scale-95"
           >
-            Details →
+           <span className="flex  items-center gap-1">Details <ArrowRight className="h-4 w-3"/></span> 
           </Link>
         </div>
-      </Card>
+      </div>
 
       <AlertDialog
         open={confirmOpen}

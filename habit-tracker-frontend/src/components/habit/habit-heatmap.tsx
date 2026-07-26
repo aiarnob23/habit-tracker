@@ -53,7 +53,7 @@ export function HabitHeatmap({ checkIns, weeksCount = 13 }: HabitHeatmapProps) {
                       className={cn(
                         'group relative w-3 h-3 rounded-[3px] transition-all duration-150',
                         !cell && 'bg-transparent',
-                        cell && !cell.completed && 'bg-muted hover:bg-muted-foreground/20',
+                        cell && !cell.completed && 'bg-chart-2/70 hover:bg-muted-foreground/20',
                         cell?.completed &&
                         'bg-emerald-500 hover:bg-emerald-400 hover:scale-110 shadow-[0_0_0_1px_rgba(16,185,129,0.15)]',
                         isToday && 'ring-2 ring-offset-1 ring-offset-background ring-primary/60',

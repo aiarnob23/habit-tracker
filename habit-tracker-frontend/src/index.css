@@ -76,7 +76,7 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --sidebar: oklch(38.469% 0.08911 255.635 / 0.432);
-  --habitcard: oklch(73.044% 0.03004 256.559 / 0.432);
+  --habitcard: oklch(30% 0.017 239.5)
   --heatstroke:oklch(0.6804 0.1042 186.91);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);

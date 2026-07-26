@@ -37,7 +37,7 @@ export function ArchivedHabitCard({
 
   return (
     <>
-      <Card className="flex flex-col p-4">
+      <Card className="flexrounded-3xl border border-white/15 bg-habitcard backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,.45)] flex-col p-4">
         <div className="flex items-start justify-between">
           <div>
             <h3 className="font-semibold">
