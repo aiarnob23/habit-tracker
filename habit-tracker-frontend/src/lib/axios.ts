@@ -57,11 +57,15 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const { accessToken } = await AuthService.refreshAccessToken();
+        const data = await AuthService.refreshAccessToken();
 
-        useAuthStore.getState().setAccessToken(accessToken);
-        processQueue(null, accessToken);
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        useAuthStore.getState().setAuth({
+          userId: data.userId,
+          accessToken: data.accessToken,
+        });
+
+        processQueue(null, data.accessToken);
+        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);

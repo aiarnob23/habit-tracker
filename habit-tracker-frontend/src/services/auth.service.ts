@@ -45,12 +45,12 @@ export const AuthService = {
   },
 
   //Refresh - Access token rotation
-  async refreshAccessToken(): Promise<{ accessToken: string }> {
+  async refreshAccessToken(): Promise<{ userId: number, accessToken: string }> {
     const { data } = await axios.post(
-      `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh`,
+      `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,
       {},
       { withCredentials: true }
     )
-    return { accessToken: data.data.accessToken };
+    return data.data;
   }
 };
