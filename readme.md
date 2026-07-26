@@ -188,12 +188,13 @@ http://localhost:5173
 # Technical Decisions
 
 - Chose NestJS for its modular architecture, dependency injection, and scalability.
-- Used Prisma ORM for type-safe database access and improved developer experience.
-- Used TanStack Query for efficient server-state management and caching.
-- Integrated React Hook Form with Zod for type-safe form validation.
+- Used Prisma ORM for type-safe database access and an improved developer experience.
 - Implemented JWT authentication with access and refresh token rotation to secure protected endpoints.
-- Used Redis for rate limiting to help mitigate brute-force and DDoS-style attacks.
+- Used Redis for rate limiting to help mitigate brute-force attacks.
 - Leveraged BullMQ for background jobs, including scheduled cleanup of expired user sessions.
+- Used TanStack Query for efficient server-state management and caching.
+- Implemented URL-based modals using TanStack Router to enable deep linking, browser history navigation, and shareable modal states.
+- Integrated React Hook Form with Zod for type-safe form validation.
 
 ---
 

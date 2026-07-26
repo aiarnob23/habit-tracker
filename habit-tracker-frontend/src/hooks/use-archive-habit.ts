@@ -12,6 +12,10 @@ export function useArchiveHabit() {
       });
 
       queryClient.invalidateQueries({
+        queryKey: ["archived-habits"],
+      })
+
+      queryClient.invalidateQueries({
         queryKey: ["habit"],
       });
     }

@@ -13,6 +13,10 @@ export function useRestoreHabit() {
       });
 
       queryClient.invalidateQueries({
+        queryKey: ["archived-habits"],
+      });
+
+      queryClient.invalidateQueries({
         queryKey: ["habit"],
       });
     },
