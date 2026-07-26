@@ -5,7 +5,7 @@ import { useToggleCheckIn } from "@/hooks/use-toggle-checkin";
 import { HabitCard } from "@/components/habit/habit-card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { CreateHabitDialog } from "@/components/habit/add-habit-dialog";
+import { CreateHabitDialog } from "@/components/habit/dialogs/add-habit-dialog";
 
 const dashboardSearchSchema = z.object({
   modal: z.enum(["create-habit"]).optional(),

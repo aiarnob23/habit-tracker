@@ -10,7 +10,10 @@ export function useUpdateHabit() {
       HabitService.updateHabit(id, payload),
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["habits"] });
-      queryClient.invalidateQueries({ queryKey: ["habit", variables.id] });
+      queryClient.invalidateQueries({
+        queryKey: ["habit", variables.id],
+        exact: false,
+      });
     },
   });
 }

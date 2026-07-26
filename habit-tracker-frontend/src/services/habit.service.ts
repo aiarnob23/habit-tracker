@@ -21,10 +21,10 @@ export const HabitService = {
 
   // Fetch a habit with its details.
   async getHabit(id: string, days = 90): Promise<HabitDetail> {
-    const { data } = await api.get<HabitDetail>(`/habits/${id}`, {
+    const { data } = await api.get<ApiResponse<HabitDetail>>(`/habits/${id}`, {
       params: { days },
     });
-    return data;
+    return data.data;
   },
 
   // Create a new habit.
