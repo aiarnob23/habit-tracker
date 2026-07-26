@@ -49,7 +49,8 @@ export function CreateHabitDialog({ open, onOpenChange }: CreateHabitDialogProps
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent
+                className=" sm:max-w-md rounded-2xl border border-white/15 bg-linear-to-br from-white/10 via-white/5 to-white/2  backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] supports-backdrop-filter:bg-white/5">
                 <DialogHeader>
                     <DialogTitle>Create a new habit</DialogTitle>
                     <DialogDescription>
@@ -86,10 +87,10 @@ export function CreateHabitDialog({ open, onOpenChange }: CreateHabitDialogProps
                     )}
 
                     <DialogFooter>
-                        <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                        <Button type="button" variant="outline" className="cursor-pointer " onClick={() => onOpenChange(false)}>
                             Cancel
                         </Button>
-                        <Button type="submit" disabled={createHabit.isPending}>
+                        <Button className="cursor-pointer" type="submit" disabled={createHabit.isPending}>
                             {createHabit.isPending ? "Creating..." : "Create habit"}
                         </Button>
                     </DialogFooter>

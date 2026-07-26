@@ -78,7 +78,7 @@ export function HabitCard({
 
               <div className="mt-3 flex items-center gap-2">
                 <Badge variant="secondary" className="gap-1">
-                  🔥 <span/>
+                  🔥 <span />
                   {habit.currentStreak} day
                   {habit.currentStreak !== 1 ? "s" : ""}
                 </Badge>
@@ -127,16 +127,16 @@ export function HabitCard({
           <Link
             to="/habits/$habitId"
             params={{ habitId: habit.id.toString() }}
-            className="text-sm border px-2 py-1 bg-accent-foreground/20 font-semibold text-primary hover:scale-95"
+            className="text-sm border px-3 rounded-2xl py-1 bg-accent-foreground/20 font-semibold text-primary hover:scale-95"
           >
-           <span className="flex  items-center gap-1">Details <ArrowRight className="h-4 w-3"/></span> 
+            <span className="flex items-center gap-1">Details <ArrowRight className="h-4 w-3" /></span>
           </Link>
         </div>
       </div>
 
       <AlertDialog
         open={confirmOpen}
-        onOpenChange={setConfirmOpen}      >
+        onOpenChange={setConfirmOpen} >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>

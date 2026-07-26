@@ -11,7 +11,7 @@ export function useRegister() {
     mutationFn: (payload: RegisterPayload) => AuthService.register(payload),
     onSuccess: (data) => {
       setAuth(data);
-      navigate({ to: "/" });
+      navigate({ to: "/login" });
     },
   });
 }

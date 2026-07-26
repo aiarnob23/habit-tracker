@@ -58,7 +58,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <button  onClick={handleLogout} className="text-destructive rounded-full font-semibold border py-1 w-2/3 mx-auto bg-gray-600 cursor-pointer active:scale-95">Log out</button>
+        <button  onClick={handleLogout} className="text-destructive/90 rounded-full font-semibold border py-1 px-16 mb-2 mx-auto bg-gray-600 cursor-pointer active:scale-95">Log out</button>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

@@ -4,10 +4,8 @@ import { ArrowLeft, Calendar, Flame, Palette, Trophy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { HabitHeatmap } from "@/components/habit/habit-heatmap";
 import { EditHabitDialog } from "@/components/habit/dialogs/edit-habit-dialog";
-
 import { useHabit } from "@/hooks/use-habit";
 import { useArchiveHabit } from "@/hooks/use-archive-habit";
 import { useRestoreHabit } from "@/hooks/use-restore-habit";
@@ -81,7 +79,7 @@ function HabitDetailsPage() {
         variant="ghost"
         className="rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
       >
-        <Link to="/">
+        <Link to="/" className="flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back
         </Link>
@@ -89,7 +87,7 @@ function HabitDetailsPage() {
 
       {/* Main Glassmorphism Card */}
       <Card className="rounded-3xl border border-white/15 bg-white/10 text-white backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,.45)]">
-        <CardHeader className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between p-8">
+        <CardHeader className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between px-8 pt-4">
           <div className="space-y-4">
             <div>
               <CardTitle className="text-3xl font-bold tracking-tight">
@@ -105,15 +103,13 @@ function HabitDetailsPage() {
 
             <div className="flex flex-wrap gap-2">
               <Badge
-                className={`border-white/20 ${
-                  habit.status === "ACTIVE"
+                className={`border-white/20 ${habit.status === "ACTIVE"
                     ? "bg-blue-500/20 text-blue-300 hover:bg-blue-500/30"
                     : "bg-white/10 text-slate-300 hover:bg-white/20"
-                }`}
+                  }`}
               >
                 {habit.status}
               </Badge>
-
               {habit.color && (
                 <Badge className="bg-white/5 border-white/10 text-slate-200 hover:bg-white/10">
                   <Palette
@@ -125,16 +121,15 @@ function HabitDetailsPage() {
               )}
             </div>
           </div>
-
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-3">
             <EditHabitDialog habit={habit} />
-            
+
             {habit.status === "ACTIVE" ? (
               <Button
                 disabled={archiveHabit.isPending}
                 onClick={() => archiveHabit.mutate(habit.id)}
-                className="rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors"
+                className="rounded-xl cursor-pointer border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors"
               >
                 Archive
               </Button>
@@ -149,7 +144,6 @@ function HabitDetailsPage() {
             )}
           </div>
         </CardHeader>
-
         <CardContent className="space-y-8 px-8 pb-8">
           {/* Statistics Grid - Nested Glass Cards */}
           <div className="grid gap-4 md:grid-cols-3">
@@ -189,7 +183,7 @@ function HabitDetailsPage() {
           {/* Heatmap Section - Nested Glass Card */}
           <Card className="rounded-2xl border border-white/10 bg-white/5 text-white backdrop-blur-md shadow-none">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold tracking-tight">
+              <CardTitle className="text-sm text-muted-foreground font-semibold tracking-tight">
                 Activity (Last 90 Days)
               </CardTitle>
             </CardHeader>

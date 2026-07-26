@@ -88,7 +88,7 @@ export function ArchivedHabitCard({
             params={{
               habitId: habit.id.toString(),
             }}
-            className="text-sm border px-2 py-1 bg-accent-foreground/20 font-semibold text-primary hover:scale-95 transition-transform"
+            className="text-sm border px-3 rounded-xl py-1 bg-accent-foreground/20 font-semibold text-primary hover:scale-95 transition-transform"
           >
             <span className="flex items-center gap-1">
               Details

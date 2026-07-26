@@ -82,7 +82,7 @@ export function EditHabitDialog({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
-                <Button>
+                <Button className="cursor-pointer rounded-2xl px-4 py-1" variant={"outline"}>
                     <Pencil className="mr-2 h-4 w-4" />
                     Edit
                 </Button>
