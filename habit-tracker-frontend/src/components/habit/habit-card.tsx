@@ -1,10 +1,11 @@
 import { Link } from '@tanstack/react-router'
-import { Flame, MoreVertical } from 'lucide-react'
+import { Flame, Trophy, MoreVertical } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import type { HabitListItem } from '@/types/habit.types'
+import { HabitHeatmap } from './habit-heatmap'
 
 interface HabitCardProps {
   habit: HabitListItem
@@ -13,7 +14,7 @@ interface HabitCardProps {
 
 export function HabitCard({ habit, onToggleToday }: HabitCardProps) {
   return (
-    <Card className="p-4 bg-habitcard">
+    <Card className="p-4 bg-habitcard flex flex-col">
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-3">
           <Checkbox
@@ -31,6 +32,10 @@ export function HabitCard({ habit, onToggleToday }: HabitCardProps) {
                 <Flame className="h-3 w-3" />
                 {habit.currentStreak} day{habit.currentStreak !== 1 ? 's' : ''}
               </Badge>
+              <Badge variant="outline" className="gap-1">
+                <Trophy className="h-3 w-3" />
+                Best: {habit.longestStreak}
+              </Badge>
             </div>
           </div>
         </div>
@@ -40,7 +45,11 @@ export function HabitCard({ habit, onToggleToday }: HabitCardProps) {
         </Button>
       </div>
 
-      <div className="flex items-center justify-between mt-4">
+      <div className="mt-4 rounded-lg border bg-muted/10 p-3 overflow-x-auto">
+        <HabitHeatmap checkIns={habit.checkIns} weeksCount={13} />
+      </div>
+
+      <div className="flex items-center justify-between mt-3">
         <span className="text-xs text-muted-foreground">
           {habit.todayCompleted ? "Done today ✓" : "Not done yet today"}
         </span>

@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HabitService } from "@/services/habit.service";
+import { getTodayUTCKey } from "@/lib/heatmap";
+import type { HabitListItem } from "@/types/habit.types";
 
 export function useToggleCheckIn() {
   const queryClient = useQueryClient();
@@ -10,18 +12,26 @@ export function useToggleCheckIn() {
 
     onMutate: async ({ id, done }) => {
       await queryClient.cancelQueries({ queryKey: ["habits"] });
-      const previousHabits = queryClient.getQueryData(["habits"]);
+      const previousHabits = queryClient.getQueryData<HabitListItem[]>(["habits"]);
+      const todayKey = getTodayUTCKey();
 
-      queryClient.setQueryData(["habits"], (old: any) =>
-        old?.map((habit: any) =>
-          habit.id.toString() === id
-            ? {
-                ...habit,
-                todayCompleted: done,
-                currentStreak: done ? habit.currentStreak + 1 : Math.max(0, habit.currentStreak - 1),
-              }
-            : habit
-        )
+      queryClient.setQueryData<HabitListItem[]>(["habits"], (old) =>
+        old?.map((habit) => {
+          if (habit.id.toString() !== id) return habit;
+
+          const checkIns = done
+            ? Array.from(new Set([...habit.checkIns, todayKey]))
+            : habit.checkIns.filter((d) => d !== todayKey);
+
+          return {
+            ...habit,
+            todayCompleted: done,
+            checkIns,
+            currentStreak: done
+              ? habit.currentStreak + 1
+              : Math.max(0, habit.currentStreak - 1),
+          };
+        })
       );
 
       return { previousHabits };

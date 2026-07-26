@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useAuthStore } from "@/store/auth.store";
+import { AuthService } from "@/services/auth.service";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_URL,
@@ -47,17 +48,11 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const { data } = await axios.post(
-          `${api.defaults.baseURL}/auth/refresh`,
-          {},
-          { withCredentials: true }
-        );
+        const { accessToken } = await AuthService.refreshAccessToken();
 
-        const newAccessToken = data.data?.accessToken ?? data.accessToken;
-
-        useAuthStore.getState().setAccessToken(newAccessToken);
-        processQueue(null, newAccessToken);
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        useAuthStore.getState().setAccessToken(accessToken);
+        processQueue(null, accessToken);
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         return api(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);

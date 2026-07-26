@@ -6,11 +6,17 @@ import type {
 } from "@/types/habit.types";
 import { api } from "@/lib/axios";
 
+type ApiResponse<T> = {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
 export const HabitService = {
   // Fetch all habits.
   async getHabits(): Promise<HabitListItem[]> {
-    const { data } = await api.get<HabitListItem[]>("/habits");
-    return data;
+    const { data } = await api.get<ApiResponse<HabitListItem[]>>("/habits");
+    return data.data;
   },
 
   // Fetch a habit with its details.

@@ -10,6 +10,7 @@ export const Route = createFileRoute("/_app/")({
 function DashboardPage() {
   const { data: habits, isPending, error } = useHabits();
   const toggleCheckIn = useToggleCheckIn();
+  console.log(habits);
 
   if (isPending) return <div className="p-4 text-muted-foreground">Loading habits...</div>;
   if (error) return <div className="p-4 text-destructive">Failed to load habits.</div>;
