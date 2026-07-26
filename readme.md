@@ -21,7 +21,9 @@
 
 # Project Overview
 
-...
+Building habits is easy; maintaining them consistently is the real challenge. Habit Tracker was built to simplify that process by providing users with an intuitive platform to create habits, track daily progress, maintain streaks, and visualize long-term consistency through a heatmap.
+
+The application is powered by a modern full-stack architecture using React, NestJS, PostgreSQL, Prisma, Redis, and Docker. It emphasizes secure authentication, scalability, maintainability, and clean software engineering practices while serving as a solid foundation for future enhancements such as advanced analytics, reminders, and premium features.
 
 ---
 
