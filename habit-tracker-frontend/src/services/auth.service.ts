@@ -12,26 +12,28 @@ export interface RegisterPayload {
   lastName?: string;
 }
 
-export interface AuthResponse {
-  user: {
-    id: number;
-    email: string;
-    firstName: string;
-    lastName?: string;
-  };
+interface ApiEnvelope<T> {
+  success: boolean;
+  message: string;
+  data: T;
+  timestamp: string;
+  path: string;
+}
+
+interface AuthData {
+  userId: number;
   accessToken: string;
-  refreshToken: string;
 }
 
 export const AuthService = {
-  async login(payload: LoginPayload): Promise<AuthResponse> {
-    const { data } = await api.post<AuthResponse>("/auth/login", payload);
-    return data;
+  async login(payload: LoginPayload): Promise<AuthData> {
+    const { data } = await api.post<ApiEnvelope<AuthData>>("/auth/login", payload);
+    return data.data;
   },
 
-  async register(payload: RegisterPayload): Promise<AuthResponse> {
-    const { data } = await api.post<AuthResponse>("/auth/register", payload);
-    return data;
+  async register(payload: RegisterPayload): Promise<AuthData> {
+    const { data } = await api.post<ApiEnvelope<AuthData>>("/auth/register", payload);
+    return data.data;
   },
 
   async logout(): Promise<void> {
