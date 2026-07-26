@@ -9,36 +9,76 @@ export const Route = createFileRoute("/_app/archived")({
 function ArchivedPage() {
   const { data, isPending, error } = useArchivedHabits();
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold">
+            Archived Habits
+          </h1>
+          <p className="mt-1 text-muted-foreground">
+            Restore habits or permanently delete them.
+          </p>
+        </div>
 
-  if (error) return <div>Failed to load archived habits.</div>;
+        <div className="rounded-2xl border-2 border-white/20 bg-habitcard p-10 text-center">
+          Loading archived habits...
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold">
+            Archived Habits
+          </h1>
+          <p className="mt-1 text-muted-foreground">
+            Restore habits or permanently delete them.
+          </p>
+        </div>
+
+        <div className="rounded-2xl border-2 border-white/20 bg-habitcard p-10 text-center text-destructive">
+          Failed to load archived habits.
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold">
+        <h1 className="text-3xl font-bold">
           Archived Habits
         </h1>
 
-        <p className="text-muted-foreground">
+        <p className="mt-1 text-muted-foreground">
           Restore habits or permanently delete them.
         </p>
       </div>
 
-      {data?.length === 0 && (
-        <div className="rounded-xl border p-10 text-center">
-          No archived habits.
+      {data?.length === 0 ? (
+        <div className="rounded-2xl border-2 border-white/20 bg-habitcard p-12 text-center">
+          <p className="text-lg font-medium">
+            No archived habits.
+          </p>
+
+          <p className="mt-2 text-sm text-muted-foreground">
+            Archived habits will appear here.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-6 lg:grid-cols-3">
+          {data.map((habit) => (
+            <ArchivedHabitCard
+              key={habit.id}
+              habit={habit}
+            />
+          ))}
         </div>
       )}
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        {data?.map((habit) => (
-          <ArchivedHabitCard
-            key={habit.id}
-            habit={habit}
-          />
-        ))}
-      </div>
     </div>
   );
 }

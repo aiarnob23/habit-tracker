@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { RotateCcw, Trash2, Flame, Trophy } from "lucide-react";
+import {
+  RotateCcw,
+  Trash2,
+  ArrowRight,
+} from "lucide-react";
 
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -37,74 +40,87 @@ export function ArchivedHabitCard({
 
   return (
     <>
-      <Card className="flexrounded-3xl border border-white/15 bg-habitcard backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,.45)] flex-col p-4">
+      <div className="p-8 bg-habitcard border-2 border-white/20 rounded-2xl overflow-hidden flex flex-col">
         <div className="flex items-start justify-between">
           <div>
-            <h3 className="font-semibold">
+            <h3 className="font-semibold text-xl leading-tight">
               {habit.title}
             </h3>
 
             {habit.description && (
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="text-sm mt-1 text-muted-foreground line-clamp-2">
                 {habit.description}
               </p>
             )}
 
-            <div className="mt-3 flex gap-2">
-              <Badge variant="secondary">
-                <Flame className="mr-1 h-3 w-3" />
-                {habit.currentStreak}
+            <div className="mt-3 flex items-center gap-2">
+              <Badge
+                variant="secondary"
+                className="gap-1"
+              >
+                🔥 <span />
+                {habit.currentStreak} day
+                {habit.currentStreak !== 1
+                  ? "s"
+                  : ""}
               </Badge>
 
-              <Badge variant="outline">
-                <Trophy className="mr-1 h-3 w-3" />
-                Best {habit.longestStreak}
+              <Badge
+                variant="outline"
+                className="gap-1"
+              >
+                🏆 Best: {habit.longestStreak}
               </Badge>
             </div>
           </div>
         </div>
 
-        <div className="mt-4 rounded-lg border bg-muted/20 p-3 overflow-x-auto">
+        <div className="mt-4 rounded-lg border bg-muted/10 p-3 overflow-x-auto">
           <HabitHeatmap
             checkIns={habit.checkIns}
             weeksCount={13}
           />
         </div>
 
-        <div className="mt-5 flex gap-2">
-          <Button
-            className="flex-1"
-            onClick={() =>
-              restoreHabit.mutate(habit.id.toString())
-            }
-            disabled={restoreHabit.isPending}
+        <div className="mt-4 flex items-center justify-between gap-4">
+          <Link
+            to="/habits/$habitId"
+            params={{
+              habitId: habit.id.toString(),
+            }}
+            className="text-sm border px-2 py-1 bg-accent-foreground/20 font-semibold text-primary hover:scale-95 transition-transform"
           >
-            <RotateCcw className="mr-2 h-4 w-4" />
-            {restoreHabit.isPending
-              ? "Restoring..."
-              : "Restore"}
-          </Button>
+            <span className="flex items-center gap-1">
+              Details
+              <ArrowRight className="h-4 w-3" />
+            </span>
+          </Link>
 
-          <Button
-            variant="destructive"
-            className="flex-1"
-            onClick={() => setOpen(true)}
-          >
-            <Trash2 className="mr-2 h-4 w-4" />
-            Delete
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={() =>
+                restoreHabit.mutate(
+                  habit.id.toString()
+                )
+              }
+              disabled={restoreHabit.isPending}
+            >
+              <RotateCcw className="mr-2 h-4 w-4" />
+              {restoreHabit.isPending
+                ? "Restoring..."
+                : "Restore"}
+            </Button>
+
+            <Button
+              variant="destructive"
+              onClick={() => setOpen(true)}
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete
+            </Button>
+          </div>
         </div>
-
-        <Link
-          to="/habits/$habitId"
-          params={{
-            habitId: habit.id.toString(),
-          }}
-          className="mt-4 text-sm text-primary hover:underline"
-        >
-          View Details →
-        </Link>
-      </Card>
+      </div>
 
       <AlertDialog
         open={open}
@@ -113,17 +129,22 @@ export function ArchivedHabitCard({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Permanently delete "{habit.title}"?
+              Permanently delete "
+              {habit.title}"?
             </AlertDialogTitle>
 
             <AlertDialogDescription>
-              This action cannot be undone. The habit and all
-              of its check-ins will be permanently removed.
+              This action cannot be undone.
+              The habit and all of its
+              check-ins will be permanently
+              removed.
             </AlertDialogDescription>
           </AlertDialogHeader>
 
           <AlertDialogFooter>
-            <AlertDialogCancel>
+            <AlertDialogCancel
+              disabled={deleteHabit.isPending}
+            >
               Cancel
             </AlertDialogCancel>
 
@@ -136,9 +157,8 @@ export function ArchivedHabitCard({
                 deleteHabit.mutate(
                   habit.id.toString(),
                   {
-                    onSuccess() {
-                      setOpen(false);
-                    },
+                    onSuccess: () =>
+                      setOpen(false),
                   }
                 );
               }}
