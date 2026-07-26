@@ -13,7 +13,7 @@ export function useRestoreHabit() {
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["archived-habits"],
+        queryKey: ["habit"],
       });
     },
   });

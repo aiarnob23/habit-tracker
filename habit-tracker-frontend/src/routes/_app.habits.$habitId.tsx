@@ -11,7 +11,6 @@ import { EditHabitDialog } from "@/components/habit/dialogs/edit-habit-dialog";
 import { useHabit } from "@/hooks/use-habit";
 import { useArchiveHabit } from "@/hooks/use-archive-habit";
 import { useRestoreHabit } from "@/hooks/use-restore-habit";
-import { useDeleteHabit } from "@/hooks/use-delete-habit";
 
 export const Route = createFileRoute("/_app/habits/$habitId")({
   component: HabitDetailsPage,
@@ -26,8 +25,6 @@ function HabitDetailsPage() {
 
   const archiveHabit = useArchiveHabit();
   const restoreHabit = useRestoreHabit();
-  const deleteHabit = useDeleteHabit();
-
   // Display a loading placeholder while fetching data.
   if (isPending) {
     return (
@@ -138,7 +135,7 @@ function HabitDetailsPage() {
                 variant="secondary"
                 disabled={archiveHabit.isPending}
                 onClick={() =>
-                  archiveHabit.mutate(habit.id.toString())
+                  archiveHabit.mutate(habit.id)
                 }
               >
                 Archive
@@ -153,26 +150,6 @@ function HabitDetailsPage() {
                   }
                 >
                   Restore
-                </Button>
-
-                <Button
-                  variant="destructive"
-                  disabled={deleteHabit.isPending}
-                  onClick={() => {
-                    const confirmed = window.confirm(
-                      "Permanently delete this habit? This action cannot be undone."
-                    );
-
-                    if (!confirmed) return;
-
-                    deleteHabit.mutate(habit.id.toString(), {
-                      onSuccess: () => {
-                        window.history.back();
-                      },
-                    });
-                  }}
-                >
-                  Delete Permanently
                 </Button>
               </>
             )}

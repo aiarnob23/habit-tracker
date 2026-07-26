@@ -5,13 +5,14 @@ export function useArchiveHabit() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => HabitService.archiveHabit(id),
+    mutationFn: (id: number) => HabitService.archiveHabit(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["habits"],
       });
+
       queryClient.invalidateQueries({
-        queryKey: ["archived-habits"],
+        queryKey: ["habit"],
       });
     }
   });

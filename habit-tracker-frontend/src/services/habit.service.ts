@@ -48,7 +48,7 @@ export const HabitService = {
   },
 
   // Archive a habit.
-  async archiveHabit(id: string): Promise<HabitListItem> {
+  async archiveHabit(id: number): Promise<HabitListItem> {
     const { data } = await api.patch<HabitListItem>(
       `/habits/${id}/archive`
     );
