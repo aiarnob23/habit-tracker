@@ -38,6 +38,7 @@ export class HabitsService {
     //find all for user
     async findAllForUser(userId: number): Promise<HabitListItem[]> {
         const cutoff = daysAgoUTC(400);
+
         const habits = await this.habitRepo.findManyByUserWithRecentCheckIns(
             userId,
             'ACTIVE',
@@ -48,8 +49,8 @@ export class HabitsService {
 
         return habits.map((habit) => {
             const dates = habit.habitCheckIns.map((c) => c.date);
+
             const { currentStreak, longestStreak } = computeStreaks(dates);
-            const todayCompleted = dates.some((d) => toDateKey(d) === today);
 
             return {
                 id: habit.id,
@@ -57,7 +58,36 @@ export class HabitsService {
                 description: habit.description,
                 color: habit.color,
                 status: habit.status,
-                todayCompleted,
+                todayCompleted: dates.some((d) => toDateKey(d) === today),
+                currentStreak,
+                longestStreak,
+                checkIns: dates.map((d) => toDateKey(d)),
+            };
+        });
+    }
+
+    //find archived habits for user
+    async findArchivedForUser(userId: number): Promise<HabitListItem[]> {
+        const cutoff = daysAgoUTC(400);
+
+        const habits = await this.habitRepo.findManyByUserWithRecentCheckIns(
+            userId,
+            'ARCHIVED',
+            cutoff,
+        );
+
+        return habits.map((habit) => {
+            const dates = habit.habitCheckIns.map((c) => c.date);
+
+            const { currentStreak, longestStreak } = computeStreaks(dates);
+
+            return {
+                id: habit.id,
+                title: habit.title,
+                description: habit.description,
+                color: habit.color,
+                status: habit.status,
+                todayCompleted: false,
                 currentStreak,
                 longestStreak,
                 checkIns: dates.map((d) => toDateKey(d)),
@@ -118,20 +148,22 @@ export class HabitsService {
 
     //archive
     async archive(userId: number, habitId: number) {
-        this.logger.info('Archiving habit', {
-            userId,
-            habitId,
-        });
         await this.getOwnedHabitOrThrow(userId, habitId);
-        const habit = await this.habitRepo.update(habitId, {
+
+        return this.habitRepo.update(habitId, {
             status: 'ARCHIVED',
             archivedAt: new Date(),
         });
-        this.logger.info('Habit archived successfully', {
-            userId,
-            habitId,
+    }
+
+    //restore
+    async restore(userId: number, habitId: number) {
+        await this.getOwnedHabitOrThrow(userId, habitId);
+
+        return this.habitRepo.update(habitId, {
+            status: 'ACTIVE',
+            archivedAt: null,
         });
-        return habit;
     }
 
     //mark today done
@@ -179,6 +211,13 @@ export class HabitsService {
         const cutoff = daysAgoUTC(days);
         const checkIns = await this.habitRepo.findCheckInsByHabit(habitId, cutoff);
         return checkIns.map((c) => toDateKey(c.date));
+    }
+
+    //permanent delete
+    async permanentlyDelete(userId: number, habitId: number) {
+        await this.getOwnedHabitOrThrow(userId, habitId);
+
+        return this.habitRepo.delete(habitId);
     }
 
     // PRIVATE

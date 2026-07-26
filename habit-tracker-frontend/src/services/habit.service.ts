@@ -49,7 +49,7 @@ export const HabitService = {
 
   // Archive a habit.
   async archiveHabit(id: string): Promise<HabitListItem> {
-    const { data } = await api.delete<HabitListItem>(`/habits/${id}`);
+    const { data } = await api.patch<HabitListItem>(`/habits/${id}`);
     return data;
   },
 

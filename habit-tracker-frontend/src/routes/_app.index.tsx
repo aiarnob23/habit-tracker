@@ -39,7 +39,7 @@ function DashboardPage() {
           </p>
         </div>
         <Button
-          className="rounded-full cursor-pointer hover:scale-105 font-semibold"
+          className="rounded-full cursor-pointer hover:scale-105 px-4 font-semibold"
           onClick={openCreateModal}
         >
           <Plus /> Add Habit

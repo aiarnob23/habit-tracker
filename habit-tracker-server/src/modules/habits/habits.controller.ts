@@ -35,6 +35,16 @@ export class HabitsController {
         }
     }
 
+    /** Archived habits */
+    @Get('archived')
+    async findArchived(@CurrentUser('userId') userId: number) {
+        const habits = await this.habitsService.findArchivedForUser(userId);
+        return {
+            message: 'Archived habits fetched successfully',
+            data: habits,
+        };
+    }
+
     /** Detail view */
     @Get(':id')
     async findOne(
@@ -59,12 +69,14 @@ export class HabitsController {
         return this.habitsService.update(userId, id, dto);
     }
 
-    /** Soft delete */
-    @Delete(':id')
-    archive(@CurrentUser('userId') userId: number, @Param('id', ParseIntPipe) id: number) {
+    /**  Archive */
+    @Patch(':id/archive')
+    archive(
+        @CurrentUser('userId') userId: number,
+        @Param('id', ParseIntPipe) id: number,
+    ) {
         return this.habitsService.archive(userId, id);
     }
-
     /** Mark today done */
     @Put(':id/checkins/today')
     completeToday(
@@ -95,5 +107,23 @@ export class HabitsController {
             message: 'Check-ins fetched successfully',
             data: checkIns,
         }
+    }
+
+    /** Restore */
+    @Patch(':id/restore')
+    restore(
+        @CurrentUser('userId') userId: number,
+        @Param('id', ParseIntPipe) id: number,
+    ) {
+        return this.habitsService.restore(userId, id);
+    }
+
+    /** Permanently delete */
+    @Delete(':id')
+    permanentlyDelete(
+        @CurrentUser('userId') userId: number,
+        @Param('id', ParseIntPipe) id: number,
+    ) {
+        return this.habitsService.permanentlyDelete(userId, id);
     }
 }

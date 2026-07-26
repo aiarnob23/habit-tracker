@@ -5,7 +5,7 @@ import { IHabitRepository } from '../interfaces/habit-repository.interface';
 
 @Injectable()
 export class PrismaHabitRepository implements IHabitRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   create(data: Prisma.HabitCreateInput) {
     return this.prisma.habit.create({ data });
@@ -17,8 +17,13 @@ export class PrismaHabitRepository implements IHabitRepository {
 
   findManyByUser(userId: number, status?: HabitStatus) {
     return this.prisma.habit.findMany({
-      where: { userId, ...(status ? { status } : {}) },
-      orderBy: { createdAt: 'desc' },
+      where: {
+        userId,
+        ...(status && { status }),
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
   }
 
@@ -35,6 +40,24 @@ export class PrismaHabitRepository implements IHabitRepository {
 
   findCheckInByDate(habitId: number, date: Date) {
     return this.prisma.habitCheckIn.findFirst({ where: { habitId, date } });
+  }
+
+  findArchivedByUser(userId: number) {
+    return this.prisma.habit.findMany({
+      where: {
+        userId,
+        status: "ARCHIVED",
+      },
+      orderBy: {
+        archivedAt: "desc",
+      },
+    });
+  }
+
+  delete(id: number) {
+    return this.prisma.habit.delete({
+      where: { id },
+    });
   }
 
   createCheckIn(habitId: number, date: Date) {
