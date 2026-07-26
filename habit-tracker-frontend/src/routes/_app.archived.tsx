@@ -60,7 +60,7 @@ function ArchivedPage() {
       </div>
 
       {data?.length === 0 ? (
-        <div className="rounded-2xl border-2 border-white/20 bg-habitcard p-12 text-center">
+        <div className="rounded-2xl border-2 border-white/20 bg-habitcard/30 p-12 text-center">
           <p className="text-lg font-medium">
             No archived habits.
           </p>

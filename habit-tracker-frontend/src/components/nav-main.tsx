@@ -6,7 +6,6 @@ import {
 import { Link } from "@tanstack/react-router";
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -32,8 +31,7 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarMenu>
+      <SidebarMenu className="gap-3 mt-6 ml-1">
         {items.map((item) => (
           item.items && item.items.length > 0 ? (
             <Collapsible

@@ -137,7 +137,7 @@ function HabitDetailsPage() {
               <Button
                 disabled={restoreHabit.isPending}
                 onClick={() => restoreHabit.mutate(habit.id.toString())}
-                className="rounded-xl border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors"
+                className="rounded-xl cursor-pointer border border-white/10 bg-white/5 text-white hover:bg-white/10 transition-colors"
               >
                 Restore
               </Button>

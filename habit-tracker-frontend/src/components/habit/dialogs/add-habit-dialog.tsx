@@ -61,7 +61,7 @@ export function CreateHabitDialog({ open, onOpenChange }: CreateHabitDialogProps
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div className="space-y-1.5">
                         <Label htmlFor="title">Title</Label>
-                        <Input id="title" placeholder="Read 20 minutes" {...register("title")} />
+                        <Input id="title" placeholder="Learning GoLang" {...register("title")} />
                         {errors.title && (
                             <p className="text-sm text-destructive">{errors.title.message}</p>
                         )}

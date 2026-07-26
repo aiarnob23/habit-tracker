@@ -40,7 +40,7 @@ export function ArchivedHabitCard({
 
   return (
     <>
-      <div className="p-8 bg-habitcard border-2 border-white/20 rounded-2xl overflow-hidden flex flex-col">
+      <div className="p-8 bg-habitcard/40 border-2 border-white/20 rounded-2xl overflow-hidden flex flex-col">
         <div className="flex items-start justify-between">
           <div>
             <h3 className="font-semibold text-xl leading-tight">
@@ -98,6 +98,7 @@ export function ArchivedHabitCard({
 
           <div className="flex gap-2">
             <Button
+              className="cursor-pointer"
               onClick={() =>
                 restoreHabit.mutate(
                   habit.id.toString()
@@ -114,6 +115,7 @@ export function ArchivedHabitCard({
             <Button
               variant="destructive"
               onClick={() => setOpen(true)}
+              className="cursor-pointer"
             >
               <Trash2 className="mr-2 h-4 w-4" />
               Delete

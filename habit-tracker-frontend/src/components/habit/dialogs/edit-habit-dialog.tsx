@@ -148,6 +148,7 @@ export function EditHabitDialog({
 
                     <DialogFooter>
                         <Button
+                        className="cursor-pointer"
                             type="submit"
                             disabled={
                                 updateHabit.isPending ||

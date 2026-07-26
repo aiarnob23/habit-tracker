@@ -55,7 +55,7 @@ export function HabitCard({
 
   return (
     <>
-      <div className="p-8 bg-habitcard border-white/20 border-2 rounded-2xl overflow-hidden flex flex-col">
+      <div className="p-8 bg-habitcard/40 border-white/20 border-2 rounded-2xl overflow-hidden flex flex-col">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
             <Checkbox
@@ -100,7 +100,7 @@ export function HabitCard({
 
             <DropdownMenuContent align="end">
               <DropdownMenuItem
-                className="text-destructive focus:text-destructive"
+                className="text-destructive cursor-pointer focus:text-destructive"
                 onClick={() => setConfirmOpen(true)}
               >
                 <Trash2 className="mr-2 h-4 w-4" />
