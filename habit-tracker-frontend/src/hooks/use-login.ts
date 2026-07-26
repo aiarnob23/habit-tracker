@@ -10,7 +10,6 @@ export function useLogin() {
   return useMutation({
     mutationFn: (payload: LoginPayload) => AuthService.login(payload),
     onSuccess: (data) => {
-      console.log(data);
       setAuth(data); 
       navigate({ to: "/" });
     },

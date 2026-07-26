@@ -8,10 +8,8 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { GalleryVerticalEndIcon, TerminalSquareIcon, BotIcon, BookOpenIcon } from "lucide-react"
-import { useAuthStore } from "@/store/auth.store"
+import { GalleryVerticalEndIcon, TerminalSquareIcon, BookOpenIcon, Trash } from "lucide-react"
 import { useLogout } from "@/hooks/use-logout"
-import { Button } from "./ui/button"
 
 const data = {
   user: {
@@ -40,10 +38,10 @@ const data = {
       isActive: true,
     },
     {
-      title: "Profile",
+      title: "Archived",
       url: "#",
       icon: (
-        <BotIcon
+        <Trash
         />
       ),
     },
@@ -59,8 +57,6 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
-  const user = useAuthStore((s) => s.user)
   const handleLogout = useLogout()
   return (
     <Sidebar className="" collapsible="icon" {...props}>
@@ -71,8 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <div className="text-sm">{user?.firstName} {user?.lastName}</div>
-        <Button onClick={handleLogout} className="text-destructive">Log out</Button>
+        <button  onClick={handleLogout} className="text-destructive rounded-full font-semibold border py-1 w-2/3 mx-auto bg-gray-600 cursor-pointer active:scale-95">Log out</button>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
