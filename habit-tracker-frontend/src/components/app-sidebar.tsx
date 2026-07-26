@@ -28,32 +28,23 @@ const data = {
     }
   ],
   navMain: [
-    {
-      title: "Habits",
-      url: "#",
-      icon: (
-        <TerminalSquareIcon
-        />
-      ),
-      isActive: true,
-    },
-    {
-      title: "Archived",
-      url: "#",
-      icon: (
-        <Trash
-        />
-      ),
-    },
-    {
-      title: "How to use",
-      url: "#",
-      icon: (
-        <BookOpenIcon
-        />
-      ),
-    },
-  ],
+  {
+    title: "Habits",
+    url: "/",
+    icon: <TerminalSquareIcon />,
+    isActive: true,
+  },
+  {
+    title: "Archived",
+    url: "/archived",
+    icon: <Trash />,
+  },
+  {
+    title: "How to use",
+    url: "/guide",
+    icon: <BookOpenIcon />,
+  },
+]
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

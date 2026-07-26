@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
+import { Route as AppArchivedRouteImport } from './routes/_app/archived'
 import { Route as AuthLoginRouteImport } from './routes/_auth.login'
 import { Route as AuthRegisterRouteImport } from './routes/_auth.register'
 import { Route as AppHabitsHabitIdRouteImport } from './routes/_app.habits.$habitId'
@@ -27,6 +28,11 @@ const AuthRoute = AuthRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppArchivedRoute = AppArchivedRouteImport.update({
+  id: '/archived',
+  path: '/archived',
   getParentRoute: () => AppRoute,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
@@ -47,12 +53,14 @@ const AppHabitsHabitIdRoute = AppHabitsHabitIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
+  '/archived': typeof AppArchivedRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/habits/$habitId': typeof AppHabitsHabitIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
+  '/archived': typeof AppArchivedRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/habits/$habitId': typeof AppHabitsHabitIdRoute
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
+  '/_app/archived': typeof AppArchivedRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
   '/_app/': typeof AppIndexRoute
@@ -68,13 +77,14 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register' | '/habits/$habitId'
+  fullPaths: '/' | '/archived' | '/login' | '/register' | '/habits/$habitId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register' | '/habits/$habitId'
+  to: '/' | '/archived' | '/login' | '/register' | '/habits/$habitId'
   id:
     | '__root__'
     | '/_app'
     | '/_auth'
+    | '/_app/archived'
     | '/_auth/login'
     | '/_auth/register'
     | '/_app/'
@@ -109,6 +119,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/archived': {
+      id: '/_app/archived'
+      path: '/archived'
+      fullPath: '/archived'
+      preLoaderRoute: typeof AppArchivedRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -134,11 +151,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppArchivedRoute: typeof AppArchivedRoute
   AppIndexRoute: typeof AppIndexRoute
   AppHabitsHabitIdRoute: typeof AppHabitsHabitIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppArchivedRoute: AppArchivedRoute,
   AppIndexRoute: AppIndexRoute,
   AppHabitsHabitIdRoute: AppHabitsHabitIdRoute,
 }

@@ -49,8 +49,19 @@ export const HabitService = {
 
   // Archive a habit.
   async archiveHabit(id: string): Promise<HabitListItem> {
-    const { data } = await api.patch<HabitListItem>(`/habits/${id}`);
+    const { data } = await api.patch<HabitListItem>(
+      `/habits/${id}/archive`
+    );
     return data;
+  },
+
+  //get archived habits
+  async getArchivedHabits(): Promise<HabitListItem[]> {
+    const { data } = await api.get<ApiResponse<HabitListItem[]>>(
+      "/habits/archived"
+    );
+
+    return data.data;
   },
 
   // Mark today's check-in.
@@ -62,6 +73,24 @@ export const HabitService = {
   // Remove today's check-in.
   async unmarkToday(id: string) {
     const { data } = await api.delete(`/habits/${id}/checkins/today`);
+    return data;
+  },
+
+  //Restore archived habit
+  async restoreHabit(id: string): Promise<HabitListItem> {
+    const { data } = await api.patch<HabitListItem>(
+      `/habits/${id}/restore`
+    );
+
+    return data;
+  },
+
+  //Permanently delete
+  async deleteHabit(id: string) {
+    const { data } = await api.delete(
+      `/habits/${id}`
+    );
+
     return data;
   },
 
