@@ -63,7 +63,7 @@ export function HabitCard({
               onCheckedChange={(checked) =>
                 onToggleToday(habit.id, checked === true)
               }
-              className="mt-1 h-5 w-5"
+              className="mt-1 h-5 w-5 cursor-pointer"
             />
             <div className="">
               <h3 className="font-semibold text-xl leading-tight">

@@ -89,7 +89,7 @@ export function HabitHeatmap({ checkIns, weeksCount = 13 }: HabitHeatmapProps) {
             </div>
 
             <div className="flex items-center gap-1">
-              <div className="h-3 w-3 rounded-[3px] bg-" />
+              <div className="h-3 w-3 rounded-[3px] bg-chart-2" />
               <span>Missed</span>
             </div>
 
