@@ -251,8 +251,12 @@ http://localhost:5173
 
 <img width="1309" height="812" alt="Image" src="https://github.com/user-attachments/assets/c0ae7301-be7c-4077-a92f-17b01a7833d2" />
 
-## Habit Heapmap
+## Habit Heatmap
 
 <img width="574" height="481" alt="Image" src="https://github.com/user-attachments/assets/03e534a4-f192-4994-9d3c-833a257e53a8" />
+
+## Heatmap Details
+
+<img width="572" height="478" alt="Image" src="https://github.com/user-attachments/assets/59eef7f7-bc7a-4f2b-a187-b1cecc584873" />
 
 ---
