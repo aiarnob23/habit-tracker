@@ -20,9 +20,14 @@ import { HabitsService } from './habits.service';
 export class HabitsController {
     constructor(private readonly habitsService: HabitsService) { }
 
+    /** Create */
     @Post()
-    create(@CurrentUser('userId') userId: number, @Body() dto: CreateHabitDto) {
-        return this.habitsService.create(userId, dto);
+    async create(@CurrentUser('userId') userId: number, @Body() dto: CreateHabitDto) {
+        const res = await this.habitsService.create(userId, dto);
+        return {
+            message: 'Habit created successfully',
+            data: res,
+        }
     }
 
     /** All habit's */
@@ -61,38 +66,54 @@ export class HabitsController {
 
     /** Update */
     @Patch(':id')
-    update(
+    async update(
         @CurrentUser('userId') userId: number,
         @Param('id', ParseIntPipe) id: number,
         @Body() dto: UpdateHabitDto,
     ) {
-        return this.habitsService.update(userId, id, dto);
+        const habit = await this.habitsService.update(userId, id, dto);
+        return {
+            message: 'Habit updated successfully',
+            data: habit,
+        }
     }
 
     /**  Archive */
     @Patch(':id/archive')
-    archive(
+    async archive(
         @CurrentUser('userId') userId: number,
         @Param('id', ParseIntPipe) id: number,
     ) {
-        return this.habitsService.archive(userId, id);
+        const habit = await this.habitsService.archive(userId, id);
+        return {
+            message: 'Habit archived successfully',
+            data: habit,
+        }
     }
     /** Mark today done */
     @Put(':id/checkins/today')
-    completeToday(
+    async completeToday(
         @CurrentUser('userId') userId: number,
         @Param('id', ParseIntPipe) id: number,
     ) {
-        return this.habitsService.markTodayDone(userId, id);
+        const checkIn = await this.habitsService.markTodayDone(userId, id);
+        return {
+            message: 'Habit marked for today successfully',
+            data: checkIn,
+        }
     }
 
     /** Unmark today */
     @Delete(':id/checkins/today')
-    removeTodayCompletion(
+    async removeTodayCompletion(
         @CurrentUser('userId') userId: number,
         @Param('id', ParseIntPipe) id: number,
     ) {
-        return this.habitsService.unmarkToday(userId, id);
+        const checkIn = await this.habitsService.unmarkToday(userId, id);
+        return {
+            message: 'Habit marked for today removed successfully',
+            data: checkIn,
+        }
     }
 
     /** Get check-ins */
@@ -111,19 +132,27 @@ export class HabitsController {
 
     /** Restore */
     @Patch(':id/restore')
-    restore(
+    async restore(
         @CurrentUser('userId') userId: number,
         @Param('id', ParseIntPipe) id: number,
     ) {
-        return this.habitsService.restore(userId, id);
+        const habit = await this.habitsService.restore(userId, id);
+        return {
+            message: 'Habit restored successfully',
+            data: habit,
+        }
     }
 
     /** Permanently delete */
     @Delete(':id')
-    permanentlyDelete(
+    async permanentlyDelete(
         @CurrentUser('userId') userId: number,
         @Param('id', ParseIntPipe) id: number,
     ) {
-        return this.habitsService.permanentlyDelete(userId, id);
+        const res = await this.habitsService.permanentlyDelete(userId, id);
+        return {
+            message: 'Habit permanently deleted successfully',
+            data: res.id,
+        }
     }
 }

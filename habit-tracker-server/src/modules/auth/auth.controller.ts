@@ -27,8 +27,15 @@ export class AuthController {
     @Public()
     @Post('register')
     @HttpCode(HttpStatus.CREATED)
-    register(@Body() dto: RegisterDto) {
-        return this.authService.register(dto);
+    async register(@Body() dto: RegisterDto) {
+        const result = await this.authService.register(dto);
+        return {
+            message: 'User created successfully',
+            data: {
+                userId: result.data.userId,
+                requiredVerification: result.data.requiredVerification,
+            }
+        }
     }
 
     //Login
@@ -80,7 +87,8 @@ export class AuthController {
         }
         res.clearCookie('refreshToken', REFRESH_COOKIE_OPTIONS);
         return {
-            message: 'Logout successfully'
+            message: 'Logout successfully',
+            data: {}
         }
     }
 

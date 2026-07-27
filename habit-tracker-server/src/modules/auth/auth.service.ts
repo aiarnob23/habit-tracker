@@ -32,6 +32,7 @@ export class AuthService {
         //Check if email already exists
         const existingUser = await this.usersService.findByEmail(dto.email);
         if (existingUser) {
+            this.logger.info('Email already exists', { email: dto.email });
             throw new ConflictException(
                 ErrorCodes.EMAIL_ALREADY_EXISTS,
                 'This email is already registered',
@@ -65,6 +66,13 @@ export class AuthService {
         //Check if user exists
         const existingUser = await this.usersService.findByEmail(dto.email);
         if (!existingUser) {
+            throw new NotFoundException(
+                ErrorCodes.USER_NOT_FOUND,
+                'User not found',
+            )
+        }
+        if(existingUser.isDeleted){
+            this.logger.info('User does not exist anymore', { email: dto.email });
             throw new NotFoundException(
                 ErrorCodes.USER_NOT_FOUND,
                 'User not found',
@@ -115,6 +123,7 @@ export class AuthService {
         //check if user exists
         const user = await this.usersService.findByEmail(paylod.email);
         if (!user) {
+            this.logger.info('User not found', { email: paylod.email });
             throw new UnauthorizedException(
                 ErrorCodes.INVALID_TOKEN,
                 'Refresh token is invalid or expired',
@@ -132,6 +141,7 @@ export class AuthService {
         const { accessToken, refreshToken } = this.tokenService.generateToken(paylod.userId, paylod.email);
         //rotate refresh token
         await this.sessionService.rotateRefreshToken(session.id, refreshToken);
+        this.logger.info('Token refreshed successfully', { userId: user.id });
         return {
             message: 'Token refreshed successfully',
             data: {
@@ -141,7 +151,6 @@ export class AuthService {
             }
         }
     }
-
 
     // LOGOUT
     async logout(refreshToken: string, accessToken: string) {
@@ -170,7 +179,6 @@ export class AuthService {
             this.logger.error('Error revoking session', error as string);
         }
     }
-
 
     // PRIVATE
     // HASH PASSWORD

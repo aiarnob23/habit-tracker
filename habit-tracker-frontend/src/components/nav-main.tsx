@@ -44,7 +44,7 @@ export function NavMain({
                 render={<SidebarMenuButton tooltip={item.title} />}
               >
                 {item.icon}
-                <span>{item.title}</span>
+                <span className="text-2xl">{item.title}</span>
                 <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-open/collapsible:rotate-90" />
               </CollapsibleTrigger>
 
@@ -55,7 +55,7 @@ export function NavMain({
                       <SidebarMenuSubButton
                         render={<Link to={subItem.url as any} />}
                       >
-                        <span>{subItem.title}</span>
+                        <span className="text-sm">{subItem.title}</span>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

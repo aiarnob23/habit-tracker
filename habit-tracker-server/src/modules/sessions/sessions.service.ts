@@ -17,7 +17,6 @@ export class SessionService {
         meta?: { userAgent?: string, ipAddress?: string, expiresAt?: Date},
     ) {
         const refreshTokenHash = await this.EncryptionService.hash(refreshToken);
-
         return this.sessionRepository.createSession({
             userId,
             refreshTokenHash,

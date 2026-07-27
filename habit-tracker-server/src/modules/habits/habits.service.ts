@@ -44,6 +44,10 @@ export class HabitsService {
             'ACTIVE',
             cutoff,
         );
+        this.logger.info('Habits found successfully', {
+            userId,
+            count: habits.length,
+        });
 
         const today = toDateKey(todayUTC());
 
@@ -75,6 +79,10 @@ export class HabitsService {
             'ARCHIVED',
             cutoff,
         );
+        this.logger.info('Archived Habits found successfully', {
+            userId,
+            count: habits.length,
+        });
 
         return habits.map((habit) => {
             const dates = habit.habitCheckIns.map((c) => c.date);
@@ -111,6 +119,11 @@ export class HabitsService {
         const heatmapDates = allDates
             .filter((d) => d >= cutoff)
             .map((d) => toDateKey(d));
+
+        this.logger.info('Habit found successfully', {
+            userId,
+            habitId,
+        });
 
         return {
             id: habit.id,
@@ -150,6 +163,11 @@ export class HabitsService {
     async archive(userId: number, habitId: number) {
         await this.getOwnedHabitOrThrow(userId, habitId);
 
+        this.logger.info('Archiving habit', {
+            userId,
+            habitId,
+        });
+
         return this.habitRepo.update(habitId, {
             status: 'ARCHIVED',
             archivedAt: new Date(),
@@ -159,6 +177,11 @@ export class HabitsService {
     //restore
     async restore(userId: number, habitId: number) {
         await this.getOwnedHabitOrThrow(userId, habitId);
+
+        this.logger.info('Restoring habit', {
+            userId,
+            habitId,
+        });
 
         return this.habitRepo.update(habitId, {
             status: 'ACTIVE',
@@ -187,6 +210,10 @@ export class HabitsService {
             userId,
             habitId,
         });
+        this.logger.info('Habit marked for today', {
+            userId,
+            habitId,
+        })
         return checkIn;
     }
 
@@ -202,6 +229,10 @@ export class HabitsService {
             userId,
             habitId,
         });
+        this.logger.info('Habit marked for today', {
+            userId,
+            habitId,
+        })
         return { success: true };
     }
 
@@ -216,8 +247,16 @@ export class HabitsService {
     //permanent delete
     async permanentlyDelete(userId: number, habitId: number) {
         await this.getOwnedHabitOrThrow(userId, habitId);
-
-        return this.habitRepo.delete(habitId);
+        this.logger.info('Permanently deleting habit', {
+            userId,
+            habitId,
+        })
+        const res = await this.habitRepo.delete(habitId);
+        this.logger.info('Habit permanently deleted', {
+            userId,
+            habitId,
+        })
+        return res;
     }
 
     // PRIVATE

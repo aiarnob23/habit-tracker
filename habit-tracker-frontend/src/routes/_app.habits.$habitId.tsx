@@ -147,7 +147,7 @@ function HabitDetailsPage() {
         <CardContent className="space-y-8 px-8 pb-8">
           {/* Statistics Grid - Nested Glass Cards */}
           <div className="grid gap-4 md:grid-cols-3">
-            <Card className="rounded-2xl border border-white/10 bg-white/5 text-white backdrop-blur-md shadow-none">
+            <Card className="rounded-2xl border border-white/10 bg-white/1 text-white/ backdrop-blur-md shadow-none">
               <CardContent className="flex items-center gap-4 p-5">
                 <Flame className="h-10 w-10 text-orange-400 drop-shadow-[0_0_15px_rgba(251,146,60,0.5)]" />
                 <div>
@@ -157,7 +157,7 @@ function HabitDetailsPage() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-2xl border border-white/10 bg-white/5 text-white backdrop-blur-md shadow-none">
+            <Card className="rounded-2xl border border-white/10 bg-white/1 text-white backdrop-blur-md shadow-none">
               <CardContent className="flex items-center gap-4 p-5">
                 <Trophy className="h-10 w-10 text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
                 <div>
@@ -167,7 +167,7 @@ function HabitDetailsPage() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-2xl border border-white/10 bg-white/5 text-white backdrop-blur-md shadow-none">
+            <Card className="rounded-2xl border border-white/10 bg-white/1 text-white backdrop-blur-md shadow-none">
               <CardContent className="flex items-center gap-4 p-5">
                 <Calendar className="h-10 w-10 text-sky-400 drop-shadow-[0_0_15px_rgba(56,189,248,0.5)]" />
                 <div>
@@ -181,14 +181,13 @@ function HabitDetailsPage() {
           </div>
 
           {/* Heatmap Section - Nested Glass Card */}
-          <Card className="rounded-2xl border border-white/10 bg-white/5 text-white backdrop-blur-md shadow-none">
+          <Card className="rounded-2xl border border-white/10 bg-white/1 text-white backdrop-blur-md shadow-none">
             <CardHeader>
               <CardTitle className="text-sm text-muted-foreground font-semibold tracking-tight">
                 Activity (Last 90 Days)
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {/* Note: Ensure your HabitHeatmap component uses dark/transparent colors internally too! */}
               <HabitHeatmap checkIns={habit.checkIns} weeksCount={13} />
             </CardContent>
           </Card>

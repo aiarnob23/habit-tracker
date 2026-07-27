@@ -62,8 +62,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </span>
         </h3>
       </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
+      <SidebarContent className="">
+        <NavMain items={data.navMain}/>
       </SidebarContent>
       <SidebarFooter>
         <button
@@ -71,13 +71,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           className=" cursor-pointer
       group flex w-full items-center rounded-lg
       border bg-gray-600 px-3 py-2
-      text-destructive/90 transition-all
+      text-destructive transition-all
       hover:bg-gray-500 active:scale-95
     "
         >
           <LogOut className="h-5 w-5 shrink-0" />
           <span className="ml-2 font-semibold group-data-[collapsible=icon]:hidden">
-            Log out
+            Logout
           </span>
         </button>
       </SidebarFooter>

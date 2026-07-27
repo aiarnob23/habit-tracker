@@ -21,19 +21,19 @@
 
 # Project Overview
 
-Building habits is easy; maintaining them consistently is the real challenge. Habit Tracker was built to simplify that process by providing users with an intuitive platform to create habits, track daily progress, maintain streaks, and visualize long-term consistency through a heatmap.
+Habit Tracker is a modern full-stack web application designed to help users build long-term consistency by creating habits, tracking daily progress, maintaining streaks, and visualizing completion history through a GitHub-style heatmap.
 
-The application is powered by a modern full-stack architecture using React, NestJS, PostgreSQL, Prisma, Redis, and Docker. It emphasizes secure authentication, scalability, maintainability, and clean software engineering practices while serving as a solid foundation for future enhancements such as advanced analytics, reminders, and premium features.
+The application emphasizes secure authentication, scalability, maintainability, and clean software engineering practices. It serves as a strong foundation for future enhancements such as advanced analytics, reminders, recurring schedules, and premium features.
 
 ---
 
 # Features
 
-## Authentication
-- User registration
-- User login
+## Authentication & Security
+- User registration & Login
+- Encryption, Session Management & Token Blacklisting
 - JWT authentication with Access token and Refresh token
-- Protected routes
+- Protected routes & Rate Limiting
 
 ## Habit Management
 - Create habits
@@ -52,6 +52,7 @@ The application is powered by a modern full-stack architecture using React, Nest
 - Loading states
 - Error handling
 - Empty states
+- User-friendly error messages
 
 ---
 
@@ -217,5 +218,41 @@ http://localhost:5173
 - Introduce subscription plans with premium features such as advanced analytics, unlimited habits, and priority support.
 - Support recurring habit schedules (daily, weekly, and custom frequencies).
 - Add achievement badges and gamification features to increase long-term user engagement.
+
+---
+
+# Screenshots
+
+## Register
+
+<img width="1892" height="946" alt="Image" src="https://github.com/user-attachments/assets/2de0220c-0a02-45e3-9847-073aceefdaa0" />
+
+## Login
+
+<img width="1892" height="946" alt="Image" src="https://github.com/user-attachments/assets/be7ae194-5409-4d60-83d8-3ff446bc36c2" />
+
+## Dashboard Overview
+
+<img width="1918" height="970" alt="Image" src="https://github.com/user-attachments/assets/a93ccbec-78b3-454c-9aa2-4f6ed21c17ab" />
+
+## Add Habit
+
+<img width="1309" height="812" alt="Image" src="https://github.com/user-attachments/assets/41ec74dd-2f8a-4bc7-bf4d-ea10a84a7241" />
+
+## Habit Details
+
+<img width="1472" height="826" alt="Image" src="https://github.com/user-attachments/assets/62627e83-fa0b-44ac-87f4-d5ce08aeb899" />
+
+## Archived Habits
+
+<img width="1883" height="969" alt="Image" src="https://github.com/user-attachments/assets/5e7884f8-67c9-4d74-a3b0-aecee31e3989" />
+
+## Edit Habits
+
+<img width="1309" height="812" alt="Image" src="https://github.com/user-attachments/assets/c0ae7301-be7c-4077-a92f-17b01a7833d2" />
+
+## Habit Heapmap
+
+<img width="574" height="481" alt="Image" src="https://github.com/user-attachments/assets/03e534a4-f192-4994-9d3c-833a257e53a8" />
 
 ---
